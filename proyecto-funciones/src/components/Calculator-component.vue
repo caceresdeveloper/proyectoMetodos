@@ -2,8 +2,8 @@
     <div class="h-screen bg-green-400 flex justify-center py-16">
       <div class="h-screen bg-green-400 flex justify-self-stretch py-16">
         <div class="w-1/2">
-
-          <div class="grid grid-cols-1 gap-2 mt-10">
+          
+          <div class="grid grid-cols-2 gap-2 mt-10">
 
             <button class="h-16 w-40 text-xl text-white font-semibold bg-green-500 rounded">Calcular por</button>
             <button class="h-16 w-40 text-xl text-white font-semibold bg-green-500 rounded">Bisección</button>
@@ -43,12 +43,8 @@
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">[</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">]</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
+          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">log</button>
+          
         
         </div>
 
@@ -58,13 +54,8 @@
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">7</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">8</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">9</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">.</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">Ln</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">i</button>
         
         </div>
@@ -76,13 +67,10 @@
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">5</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">6</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">/</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
+          
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">*</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">></button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">log</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
+
         
         </div>
 
@@ -94,12 +82,7 @@
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">3</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">-</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">+</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">  </button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
         
         </div>
 
@@ -112,11 +95,6 @@
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">%</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">--</button>
           <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">=</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
-          <button class="h-16 text-xl text-white font-semibold bg-green-500 rounded">AC</button>
         
         </div>
 
