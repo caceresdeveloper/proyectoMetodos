@@ -331,7 +331,7 @@ export default {
         console.error("Método no válido");
         return;
       }
-    }, //agregar nuevas funciones
+    }, 
     borrarUltimoCaracter() {
       // Verifica si la ecuación no está vacía antes de borrar
       if (this.ecuacion.length > 0) {

@@ -4,6 +4,7 @@
       <select v-model="opcionSeleccionada" class="select-custom">
         <option value="biseccion">Bisección</option>
         <option value="jacobi">Jacobi</option>
+        <option value="seidel">Gauss Seidel</option>
         <option value="newton">Newton Raphson</option>
         <option value="punto">Punto Fijo</option>
         <option value="secante">Secante</option>
@@ -16,10 +17,6 @@
     <!-- Mostrar la calculadora si la opción seleccionada es 'calculadora' -->
     <div v-if="opcionSeleccionada === 'biseccion'">
       <CalculatorComponent :typeMetod="1" titulo="Biseccion" />
-    </div>
-
-    <div v-if="opcionSeleccionada === 'jacobi'">
-      <CalculatorComponent :typeMetod="2" titulo="Jacobi" />
     </div>
     <div v-if="opcionSeleccionada === 'newton'">
       <CalculatorComponent :typeMetod="3" titulo="Newton Raphson" />
@@ -36,8 +33,17 @@
     <div v-if="opcionSeleccionada === 'trapezoidal'">
       <CalculatorComponent :typeMetod="7" titulo="Trapezoidal" />
     </div>
+
+    <div v-if="opcionSeleccionada === 'jacobi'">
+      <Matriz  :typeMetod="2" titulo="Jacobi"/>
+    </div>
+    <div v-if="opcionSeleccionada === 'seidel'">
+      <Matriz  :typeMetod="8" titulo="Gauss Seidel"/>
+       
+    </div>
     <div v-if="opcionSeleccionada === 'polinomio'">
-      <CalculatorComponent :typeMetod="8" titulo="Polinomio de lagrange" />
+      <Polinomio/>
+
     </div>
 
     <div v-if="opcionSeleccionada === ''">
@@ -50,19 +56,22 @@
 </template>
 
 <script>
-import CalculatorComponent from "./CalculatorComponent.vue"; // Asegúrate de importar el componente de la calculadora aquí
-
+import CalculatorComponent from "./CalculatorComponent.vue"; 
+import Matriz from "./MatrizMetod.vue";
+import Polinomio from "./PolinomioMetodo.vue";
 export default {
   data() {
     return {
-      opcionSeleccionada: "", // Opción predeterminada
-      filas: null, // Variable para almacenar el número de filas de la matriz
-      columnas: null, // Variable para almacenar el número de columnas de la matriz
-      matriz: [], // Matriz para almacenar los valores ingresados por el usuario
+      opcionSeleccionada: "", 
+      filas: null,
+      columnas: null,
+      matriz: [], 
     };
   },
   components: {
     CalculatorComponent,
+    Matriz,
+    Polinomio
   },
 };
 </script>
@@ -72,21 +81,21 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Establece la altura para ocupar toda la altura de la ventana */
-  background-color: #f0f0f0; /* Fondo de la página */
+  height: 100vh; 
+  background-color: #f0f0f0; 
 }
 
 .page-title {
-  font-family: 'Arial', sans-serif; /* Cambia la fuente a Arial o la que prefieras */
-  font-size: 36px; /* Tamaño de fuente grande */
-  color: #333; /* Color del texto */
-  text-align: center; /* Centra el texto horizontalmente */
-  text-transform: uppercase; /* Convierte el texto en mayúsculas */
-  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); /* Agrega sombra al texto */
-  padding: 20px; /* Espaciado interno */
-  background-color: #fff; /* Fondo del título */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Agrega sombra al título */
+  font-family: 'Arial', sans-serif; 
+  font-size: 36px;
+  color: #333;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); 
+  padding: 20px;
+  background-color: #fff; 
+  border-radius: 10px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
 }
 
 
@@ -95,49 +104,48 @@ export default {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  width: 50%; /* O ajusta el ancho que desees */
+  width: 50%; 
 }
 
 .select-custom {
-  font-family: "Courier New", monospace; /* Cambia la fuente a Courier New o la que prefieras */
-  font-size: 16px; /* Tamaño de fuente */
-  color: #000; /* Texto en negro */
-  background-color: #fff; /* Fondo blanco */
-  padding: 8px 16px; /* Espaciado interno */
-  border: 2px solid #000; /* Borde con color negro */
-  border-radius: 5px; /* Bordes redondeados */
+  font-family: "Courier New", monospace;
+  font-size: 16px; 
+  color: #000; 
+  background-color: #fff; 
+  padding: 8px 16px; 
+  border: 2px solid #000; 
+  border-radius: 5px; 
   cursor: pointer;
-  transition: all 0.3s ease; /* Transición suave */
+  transition: all 0.3s ease; 
 }
 
 .select-custom:hover {
-  background-color: #f5f5f5; /* Cambia el color de fondo al pasar el mouse */
-  border-color: #666; /* Cambia el color del borde al pasar el mouse */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Agrega sombra al pasar el mouse */
+  background-color: #f5f5f5; 
+  border-color: #666; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
 }
 
 .select-custom:focus {
-  outline: none; /* Elimina el contorno predeterminado al enfocar */
+  outline: none;
 }
 
-/* Estilo de flecha desplegable */
 .select-custom::after {
-  content: "\25BC"; /* Código de flecha hacia abajo */
+  content: "\25BC"; 
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
-  color: #000; /* Color de la flecha (negro) */
+  color: #000; 
   font-size: 14px;
   pointer-events: none;
 }
 
-/* Estilo de opciones desplegables */
+
 .select-custom option {
-  font-family: "Courier New", monospace; /* Cambia la fuente de las opciones */
-  font-size: 14px; /* Tamaño de fuente de las opciones */
-  background-color: #fff; /* Color de fondo de las opciones (blanco) */
-  color: #000; /* Color del texto de las opciones (negro) */
+  font-family: "Courier New", monospace; 
+  font-size: 14px; 
+  background-color: #fff; 
+  color: #000;
 }
 .calculator {
   width: 300px;

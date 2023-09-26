@@ -56,9 +56,10 @@
       <div>
         <button @click="enviar" class="custom-button">Enviar</button>
       </div>
+      <br />
     </div>
   </div>
-
+  <vue-spinner :isLoading="loading" :color="'#000'" :size="'md'"></vue-spinner>
   <div v-if="grafistatus === 1">
     <grafica :functionString="functionS" :points="point" />
   </div>
@@ -67,6 +68,9 @@
 <script>
 import grafica from "./GraphFuncion.vue";
 import axios from "axios";
+import Swal from "sweetalert2";
+import VueSpinner from 'vue-spinner/src/PulseLoader.vue'; 
+
 export default {
   props: {
     titulo: String,
@@ -74,6 +78,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       grafistatus: 0,
       functionS: "",
       point: [],
@@ -118,6 +123,7 @@ export default {
   },
   components: {
     grafica,
+    VueSpinner,
   },
   methods: {
     handleButtonClick(button) {
@@ -139,74 +145,97 @@ export default {
         return response.data.response;
       } catch (error) {
         console.error("Error al obtener datos de la API:", error);
-        throw error; // Propaga el error para que sea manejado por el método de control
+        Swal.fire({
+          icon: "error",
+          title: "Algo salió mal",
+          text: "El método diverge o ingresaste los datos de manera incorrecta. Por favor, verifica la información que has introducido.",
+        });
+        throw error;
       }
     },
 
-    // Método para llamar a la API según el método seleccionado
     async llamarAPI() {
-      let requerimiento;
-      const apiUrl = "http://127.0.0.1:5000/api/";
-      let metodo = "";
-      switch (this.typeMetod) {
-        case 1:
-          requerimiento = { ecuacion: this.ecuacion, a: this.a, b: this.b };
-          return await this.postData(apiUrl + "biseccion", requerimiento);
-        case 3:
-          requerimiento = { ecuacion: this.ecuacion, xi: this.xi };
-          return await this.postData(apiUrl + "newton", requerimiento);
-        case 4:
-          requerimiento = { ecuacion: this.ecuacion };
-          return await this.postData(apiUrl + "puntofijo", requerimiento);
-        case 5:
-          requerimiento = { ecuacion: this.ecuacion, x0: this.x0, x1: this.x1 };
-          return await this.postData(apiUrl + "secante", requerimiento);
-        case 6:
-        case 7:
-          requerimiento = {
-            ecuacion: this.ecuacion,
-            inferior: this.inferior,
-            superior: this.superior,
-            intervalos: this.intervalos,
-          };
-          metodo = this.typeMetod == 6 ? "simpson" : "trapezoidal";
+      try {
+        let requerimiento;
+        const apiUrl = "http://127.0.0.1:5000/api/";
+        let metodo = "";
+        switch (this.typeMetod) {
+          case 1:
+            requerimiento = { ecuacion: this.ecuacion, a: this.a, b: this.b };
+            return await this.postData(apiUrl + "biseccion", requerimiento);
+          case 3:
+            requerimiento = { ecuacion: this.ecuacion, xi: this.xi };
+            return await this.postData(apiUrl + "newton", requerimiento);
+          case 4:
+            requerimiento = { ecuacion: this.ecuacion };
+            return await this.postData(apiUrl + "puntofijo", requerimiento);
+          case 5:
+            requerimiento = {
+              ecuacion: this.ecuacion,
+              x0: this.x0,
+              x1: this.x1,
+            };
+            return await this.postData(apiUrl + "secante", requerimiento);
+          case 6:
+          case 7:
+            requerimiento = {
+              ecuacion: this.ecuacion,
+              inferior: this.inferior,
+              superior: this.superior,
+              intervalos: this.intervalos,
+            };
+            metodo = this.typeMetod == 6 ? "simpson" : "trapezoidal";
 
-          return await this.postData(apiUrl + metodo, requerimiento);
-        default:
-          console.error("Método no válido");
-          return;
+            return await this.postData(apiUrl + metodo, requerimiento);
+          default:
+            console.error("Método no válido");
+            return;
+        }
+      } catch (error) {
+        console.error("Error al obtener datos de la API:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Algo salió mal",
+          text: "El método diverge o ingresaste los datos de manera incorrecta. Por favor, verifica la información que has introducido.",
+        });
+        throw error;
       }
     },
 
     async enviar() {
+      this.grafistatus = 0;
       try {
+        this.loading = true;
         this.resultado = await this.llamarAPI.call(this);
         this.functionS = this.ecuacion;
         if (this.resultado) {
           if (Array.isArray(this.resultado)) {
-            this.resultado.forEach(element => {
-                let aux = element + "";
-                let pointaux = {
+            this.resultado.forEach((element) => {
+              let aux = element + "";
+              let pointaux = {
                 x: parseFloat(aux.replace(".", ",")),
                 y: 0,
-                };
-                this.point.push(pointaux);
-                
+              };
+              this.point.push(pointaux);
             });
           } else {
-            
             this.resultado = this.resultado + "";
             let pointaux = {
               x: parseFloat(this.resultado.replace(".", ",")),
               y: 0,
             };
             this.point.push(pointaux);
-            
           }
         }
         this.grafistatus = 1;
+        this.loading = false;
       } catch (error) {
-        // Manejar el error aquí si es necesario
+        Swal.fire({
+          icon: "error",
+          title: "Algo salió mal",
+          text: "El método diverge o ingresaste los datos de manera incorrecta. Por favor, verifica la información que has introducido.",
+        });
+        this.loading = false;
       }
     },
   },
@@ -215,9 +244,9 @@ export default {
 
 <style scoped>
 .custom-button {
-  background-color: #ff5722; /* Color de fondo distinto */
-  color: #fff; /* Color del texto */
-  padding: 10px 20px; /* Espaciado interno */
+  background-color: #ff5722;
+  color: #fff;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -226,7 +255,7 @@ export default {
 }
 
 .custom-button:hover {
-  background-color: #ff7043; /* Cambio de color al pasar el mouse */
+  background-color: #ff7043;
 }
 
 .option-input {
@@ -235,7 +264,7 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  width: 100px; /* Ajusta el ancho según tus preferencias */
+  width: 100px;
 }
 
 .calculator-options {
@@ -272,13 +301,13 @@ export default {
 }
 
 .calculator-title {
-  font-family: "Arial", sans-serif; /* Cambia la fuente a Arial o la que prefieras */
-  font-size: 28px; /* Tamaño de fuente más grande */
-  color: #3498db; /* Cambia el color a un tono de azul */
-  margin-bottom: 20px; /* Agrega margen inferior para separar el título del contenido */
-  text-transform: uppercase; /* Convierte el texto en mayúsculas */
-  text-align: center; /* Centra el texto horizontalmente */
-  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); /* Agrega sombra al texto */
+  font-family: "Arial", sans-serif;
+  font-size: 28px;
+  color: #3498db;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 
 .calculator-screen {
